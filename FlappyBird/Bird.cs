@@ -16,11 +16,14 @@ namespace FlappyBird
 {
     class Bird
     {
+        public double TopPosition { get; set; }
+        public int Counter { get; set; }
+
         static Bitmap[] birdImgs = new Bitmap[20];
 
         Bitmap[] birdImg = new Bitmap[2];
         PictureBox pictureBox;
-        private Thread thread; 
+        private Thread thread;
 
         public enum Color
         {
@@ -42,21 +45,29 @@ namespace FlappyBird
             birdImg[0] = birdImgs[(int)c * 2];
             birdImg[1] = birdImgs[(int)c * 2 + 1];
 
-            pictureBox = new PictureBox();
-            pictureBox.Location = new System.Drawing.Point(0,0);
-            pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBox = new PictureBox
+            {
+                Location = new System.Drawing.Point(0, 0),
+                SizeMode = PictureBoxSizeMode.AutoSize,
+                Image = birdImg[0]
+                
+            };
             form.Controls.Add(pictureBox);
-            pictureBox.Image = birdImg[0];
+            pictureBox.Left = 50;
+            Counter = 0;
+
         }
 
         static Bird()
         {
-            birdImgs = SplitImage(new Bitmap(@"D:\Education 2018\FlappyBird\FlappyBird\Textures\img_bird.png"), 2, 10).ToArray();
+            birdImgs = SplitImage(new Bitmap(@"Textures\img_bird.png"), 2, 10).ToArray();
         }
 
         public void WagStart()
         {
-            thread = new Thread(new ThreadStart(()=> {
+            WagStop();
+            thread = new Thread(new ThreadStart(() =>
+            {
                 int num = 1;
                 while (true)
                 {
@@ -70,10 +81,13 @@ namespace FlappyBird
             }));
             thread.Start();
         }
+
         public void WagStop()
         {
-            thread.Abort();
+            if (thread != null && thread.IsAlive)
+                thread.Abort();
         }
+
         public static List<Bitmap> SplitImage(Bitmap img, int NumX, int NumY)
         {
             List<Bitmap> listBmp = new List<Bitmap>();
@@ -95,5 +109,39 @@ namespace FlappyBird
                 }
             return listBmp;
         }
+
+        //Fly
+        public void Fly()
+        {
+            if (Counter == 15)
+                Counter *=-1;
+            if (Counter <= 0)
+            {
+                //fly down;
+                TopPosition += (Math.Pow(Counter, 2) * 0.0008)*2;
+
+            }
+            else
+            {
+                //fly up
+                TopPosition -= (Math.Pow(Counter, 2) * 0.0008)*1.5;
+            }
+
+            Counter --;
+
+            pictureBox.Top = (int)TopPosition;
+        }
+
+        public void Jump()
+        {
+            Counter = 65;
+        }
+
+        //Destructor
+        ~Bird()
+        {
+            WagStop();
+        }
+
     }
 }
