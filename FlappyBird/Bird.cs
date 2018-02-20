@@ -16,6 +16,8 @@ namespace FlappyBird
 {
     class Bird
     {
+        static public List<Bird> items = new List<Bird>();
+
         public double TopPosition { get; set; }
         public int Counter { get; set; }
 
@@ -44,23 +46,22 @@ namespace FlappyBird
         {
             birdImg[0] = birdImgs[(int)c * 2];
             birdImg[1] = birdImgs[(int)c * 2 + 1];
-
+            TopPosition = 100;
             pictureBox = new PictureBox
             {
-                Location = new System.Drawing.Point(0, 0),
+                Location = new System.Drawing.Point(100, (int)TopPosition),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Image = birdImg[0]
-                
             };
             form.Controls.Add(pictureBox);
-            pictureBox.Left = 50;
             Counter = 0;
+            items.Add(this);
 
         }
 
         static Bird()
         {
-            birdImgs = SplitImage(new Bitmap(@"Textures\img_bird.png"), 2, 10).ToArray();
+            birdImgs = ImgWorker.SplitImage(new Bitmap(@"Textures\img_bird.png"), 2, 10).ToArray();
         }
 
         public void WagStart()
@@ -88,27 +89,6 @@ namespace FlappyBird
                 thread.Abort();
         }
 
-        public static List<Bitmap> SplitImage(Bitmap img, int NumX, int NumY)
-        {
-            List<Bitmap> listBmp = new List<Bitmap>();
-
-            Bitmap bmp = new Bitmap(img);
-            int width = img.Width / NumX;
-            int height = img.Height / NumY;
-
-            for (int i = 0; i < NumY; i++)
-                for (int j = 0; j < NumX; j++)
-                {
-                    Rectangle rect = new Rectangle(j * width, i * height, width, height);
-                    Bitmap region = new Bitmap(rect.Width, rect.Height);
-                    using (Graphics g = Graphics.FromImage(region))
-                    {
-                        g.DrawImage(bmp, 0, 0, rect, GraphicsUnit.Pixel);
-                    }
-                    listBmp.Add(region);
-                }
-            return listBmp;
-        }
 
         //Fly
         public void Fly()

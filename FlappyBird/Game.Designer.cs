@@ -60,7 +60,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = global::FlappyBird.Properties.Resources.img_ground;
-            this.pictureBox4.Location = new System.Drawing.Point(132, 767);
+            this.pictureBox4.Location = new System.Drawing.Point(-14, 911);
             this.pictureBox4.Margin = new System.Windows.Forms.Padding(6);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(537, 100);
@@ -78,12 +78,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(2382, 998);
+            this.ClientSize = new System.Drawing.Size(1894, 1009);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.pictureBox4);
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Game";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Game";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Game_FormClosing);
             this.Load += new System.EventHandler(this.Game_Load);

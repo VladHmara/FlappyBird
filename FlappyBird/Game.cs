@@ -12,35 +12,46 @@ namespace FlappyBird
 {
     public partial class Game : Form
     {
-        List<Bird> birds = new List<Bird>();
         public Game()
         {
             InitializeComponent();
 
             for (int i = 0; i < 1; i++)
             {
-                birds.Add(new Bird(this, Bird.Color.White));
+                new Bird(this, Bird.Color.White);
+            }
+
+            for (int i = 0; i < 1; i++)
+            {
+                new Tree(this);
             }
 
         }
 
         private void Button_Click(object sender, EventArgs e)
         {
-            foreach (Bird b in birds)
+            foreach (Bird b in Bird.items)
             {
                 b.Jump();
+            }
+            foreach (Tree t in Tree.items)
+            {
+                t.GeneretePosition();
             }
         }
 
         private void Game_FormClosing(object sender, FormClosingEventArgs e)
         {
-            foreach (Bird bird in birds)
+            foreach (Bird bird in Bird.items)
                 bird.WagStop();
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            foreach (Bird b in birds)
+            //coolizies
+            //BirdDie
+
+            foreach (Bird b in Bird.items)
             {
                 b.Fly();
             }
@@ -49,7 +60,7 @@ namespace FlappyBird
         private void Game_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Space)
-                foreach (Bird b in birds)
+                foreach (Bird b in Bird.items)
                 {
                     b.Jump();
                 }
@@ -57,7 +68,7 @@ namespace FlappyBird
 
         private void Game_Load(object sender, EventArgs e)
         {
-            foreach (Bird b in birds)
+            foreach (Bird b in Bird.items)
                 b.WagStart();
             gameTimer.Start();
         }
