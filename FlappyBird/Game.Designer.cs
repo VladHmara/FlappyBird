@@ -33,15 +33,15 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(1502, 767);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(6);
+            this.btnStart.Location = new System.Drawing.Point(751, 399);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(150, 44);
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 1;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -50,18 +50,15 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 25;
-            this.listBox1.Location = new System.Drawing.Point(1454, 23);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(6);
+            this.listBox1.Location = new System.Drawing.Point(727, 12);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(236, 629);
+            this.listBox1.Size = new System.Drawing.Size(120, 329);
             this.listBox1.TabIndex = 2;
             // 
             // pictureBox4
             // 
             this.pictureBox4.Image = global::FlappyBird.Properties.Resources.img_ground;
-            this.pictureBox4.Location = new System.Drawing.Point(-14, 911);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(6);
+            this.pictureBox4.Location = new System.Drawing.Point(310, 699);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(537, 100);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -70,19 +67,28 @@
             // 
             // gameTimer
             // 
-            this.gameTimer.Interval = 16;
+            this.gameTimer.Interval = 15;
             this.gameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(499, 215);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "label1";
             // 
             // Game
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1894, 1009);
+            this.ClientSize = new System.Drawing.Size(1264, 770);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.pictureBox4);
-            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Game";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Game";
@@ -100,6 +106,6 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Timer gameTimer;
+        private System.Windows.Forms.Label label1;
     }
 }
-

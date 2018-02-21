@@ -24,8 +24,9 @@ namespace FlappyBird
         static Bitmap[] birdImgs = new Bitmap[20];
 
         Bitmap[] birdImg = new Bitmap[2];
-        PictureBox pictureBox;
+        public PictureBox pictureBox;
         private Thread thread;
+        public bool isAlive;
 
         public enum Color
         {
@@ -49,14 +50,14 @@ namespace FlappyBird
             TopPosition = 100;
             pictureBox = new PictureBox
             {
-                Location = new System.Drawing.Point(100, (int)TopPosition),
+                Location = new System.Drawing.Point(200, (int)TopPosition),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Image = birdImg[0]
             };
+            isAlive = true;
             form.Controls.Add(pictureBox);
             Counter = 0;
             items.Add(this);
-
         }
 
         static Bird()
@@ -66,21 +67,24 @@ namespace FlappyBird
 
         public void WagStart()
         {
-            WagStop();
-            thread = new Thread(new ThreadStart(() =>
+            if (isAlive)
             {
-                int num = 1;
-                while (true)
+                WagStop();
+                thread = new Thread(new ThreadStart(() =>
                 {
-                    num = num == 0 ? 1 : 0;
-                    pictureBox.BeginInvoke((MethodInvoker)(() =>
+                    int num = 1;
+                    while (true)
                     {
-                        pictureBox.Image = birdImg[num];
-                    }));
-                    Thread.Sleep(200);
-                }
-            }));
-            thread.Start();
+                        num = num == 0 ? 1 : 0;
+                        pictureBox.BeginInvoke((MethodInvoker)(() =>
+                        {
+                            pictureBox.Image = birdImg[num];
+                        }));
+                        Thread.Sleep(200);
+                    }
+                }));
+                thread.Start();
+            }
         }
 
         public void WagStop()
@@ -93,28 +97,42 @@ namespace FlappyBird
         //Fly
         public void Fly()
         {
-            if (Counter == 15)
-                Counter *=-1;
-            if (Counter <= 0)
+            if (isAlive)
             {
-                //fly down;
-                TopPosition += (Math.Pow(Counter, 2) * 0.0008)*2;
+                if (Counter == 15)
+                    Counter *= -1;
+                if (Counter <= 0)
+                {
+                    //fly down;
+                    TopPosition += (Math.Pow(Counter, 2) * 0.0008) * 2;
 
+                }
+                else
+                {
+                    //fly up
+                    TopPosition -= (Math.Pow(Counter, 2) * 0.0008) * 1.5;
+                }
+
+                Counter--;
+
+                pictureBox.BeginInvoke((MethodInvoker)(() =>
+                {
+                    pictureBox.Top = (int)TopPosition;
+                }));
             }
-            else
-            {
-                //fly up
-                TopPosition -= (Math.Pow(Counter, 2) * 0.0008)*1.5;
-            }
-
-            Counter --;
-
-            pictureBox.Top = (int)TopPosition;
         }
 
         public void Jump()
         {
-            Counter = 65;
+            if (isAlive)
+                Counter = 65;
+        }
+
+        public void Dead()
+        {
+            pictureBox.Visible = false;
+            isAlive = false;
+            WagStop();
         }
 
         //Destructor

@@ -12,31 +12,35 @@ namespace FlappyBird
     {
         public static List<Tree> items = new List<Tree>();
         static Bitmap[] treeImgs = new Bitmap[2];
+        static public Tree targetOfBird;
 
-        PictureBox pbTreeTop;
-        PictureBox pbTreeBottom;
+        public PictureBox pbTreeTop;
+        public PictureBox pbTreeBottom;
         public Tree(Form form)
         {
             pbTreeTop = new PictureBox
             {
-                Location = new System.Drawing.Point(form.Width - 300, 0),
+                Location = new System.Drawing.Point(Convert.ToInt32((form.Width + 90) * (1 + items.Count / 4.0)), 0),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Image = treeImgs[0],
-                
             };
-            
+
             pbTreeBottom = new PictureBox
             {
-                Location = new System.Drawing.Point(form.Width - 300, 0),
+                Location = new System.Drawing.Point(Convert.ToInt32((form.Width + 90) * (1 + items.Count / 4.0)), 0),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Image = treeImgs[1],
             };
             GeneretePosition();
 
-            items.Add(this);
 
             form.Controls.Add(pbTreeTop);
             form.Controls.Add(pbTreeBottom);
+
+            if (items.Count == 0)
+                targetOfBird = this;
+
+            items.Add(this);
         }
         static Tree()
         {
@@ -48,6 +52,19 @@ namespace FlappyBird
             Random r = new Random();
             pbTreeTop.Top = r.Next(-300, 0);
             pbTreeBottom.Top = pbTreeTop.Top + 600;
+        }
+
+        public void Move()
+        {
+            if (pbTreeTop.Left <= -90)
+            {
+                pbTreeTop.Left = pbTreeTop.Parent.Width;
+                GeneretePosition();
+            }
+            else
+                pbTreeTop.Left = pbTreeTop.Left - 3;
+            pbTreeBottom.Left = pbTreeTop.Left;
+
         }
 
     }
