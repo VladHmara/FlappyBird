@@ -17,7 +17,7 @@ namespace FlappyBird
         {
             InitializeComponent();
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 10; i++)
             {
                 new Bird(this, Bird.Color.White);
             }
@@ -44,19 +44,34 @@ namespace FlappyBird
                 bird.WagStop();
         }
 
+
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             //coolizies
-            //BirdDie
+            //BirdDie        
+            //Thread thread1 = new Thread(() => {
             foreach (Bird b in Bird.items)
             {
-                foreach (Tree t in Tree.items)
+                foreach (Tree tree in Tree.items)
                 {
-                    if (b.pictureBox.Bounds.IntersectsWith(t.pbTreeBottom.Bounds) || b.pictureBox.Bounds.IntersectsWith(t.pbTreeTop.Bounds))
+                    if (b.pictureBox.Bounds.IntersectsWith(tree.pbTreeBottom.Bounds) || b.pictureBox.Bounds.IntersectsWith(tree.pbTreeTop.Bounds))
                         b.Dead();
                 }
             }
+        //});
+        //    thread1.Start(); 
 
+            //Thread thread2 = new Thread(() =>  {
+                if (Tree.targetOfBird.pbTreeTop.Left <= 200)
+                {
+                    List<Tree> trees = Tree.items.FindAll(p => !p.Equals(Tree.targetOfBird));
+                    Tree.targetOfBird = trees[0];
+                    foreach (Tree t in trees)
+                        if (t.pbTreeTop.Left < Tree.targetOfBird.pbTreeTop.Left)
+                            Tree.targetOfBird = t;
+                }
+            //});
+            //thread2.Start();
 
             foreach (Bird b in Bird.items)
             {
@@ -68,17 +83,10 @@ namespace FlappyBird
                 t.Move();
             }
 
-            if (Tree.targetOfBird.pbTreeTop.Left <= 200)
-            {
-                List<Tree> trees = Tree.items.FindAll(p => !p.Equals(Tree.targetOfBird));
-                Tree.targetOfBird = trees[0];
-                foreach (Tree t in trees)
-                    if (t.pbTreeTop.Left < Tree.targetOfBird.pbTreeTop.Left)
-                        Tree.targetOfBird = t;
-            }
+            //thread2.Join();
             label1.Text = Tree.targetOfBird.pbTreeTop.Left.ToString();
             label1.Left = Tree.targetOfBird.pbTreeTop.Left;
-
+            //thread1.Join();
         }
 
         private void Game_KeyDown(object sender, KeyEventArgs e)

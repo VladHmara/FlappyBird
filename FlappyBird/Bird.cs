@@ -130,7 +130,7 @@ namespace FlappyBird
 
         public void Dead()
         {
-            pictureBox.Visible = false;
+            pictureBox.BeginInvoke((MethodInvoker)(() => pictureBox.Visible = false));
             isAlive = false;
             WagStop();
         }
