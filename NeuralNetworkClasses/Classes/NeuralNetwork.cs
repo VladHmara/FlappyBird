@@ -37,6 +37,24 @@ namespace NeuralNetworkClasses.Classes
             }
         }
 
+        public List<double> GetGenome()
+        {
+            List<double> genome = new List<double>();
+            foreach (Layer layer in Layers)
+                genome.AddRange(layer.GetGenome());
+            return genome;
+        }
+
+        public void SetGenome(List<double> genome)
+        {
+            int sum = 0;
+            foreach (Layer layer in Layers)
+            {
+                int num = layer.Neurons.Count;
+                layer.SetGenome(genome.GetRange(sum, num));
+                sum += num;
+            }
+        }
 
         public List<double> Handle(List<double> input)
         {

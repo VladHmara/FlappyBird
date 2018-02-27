@@ -28,6 +28,20 @@ namespace NeuralNetworkClasses.Classes
                 Sinapses.Add(new Sinaps(previousLayer.Neurons[i], genome[i]));
         }
 
+        public List<double> GetGenome()
+        {
+            List<double> genome = new List<double>();
+            foreach (Sinaps sinaps in Sinapses)
+                genome.Add(sinaps.Weight);
+            return genome;
+        }
+
+        public void SetGenome(List<double> genome)
+        {
+            for (int i = 0; i < Sinapses.Count; i++)
+                Sinapses[i].Weight = genome[i];
+        }
+
         public void Activation()
         {
             double sum = 0;

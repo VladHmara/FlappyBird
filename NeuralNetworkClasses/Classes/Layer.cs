@@ -34,12 +34,6 @@ namespace NeuralNetworkClasses.Classes
                 Neurons.Add(new Neuron(previousLayer, genome.GetRange(i * num, num)));
         }
 
-        public void Handle()
-        {
-            foreach (Neuron neuron in Neurons)
-                neuron.Activation();
-        }
-
         public List<double> GetData()
         {
             List<double> data = new List<double>();
@@ -54,5 +48,29 @@ namespace NeuralNetworkClasses.Classes
                 Neurons[i].Data = data[i];
         }
 
+        public List<double> GetGenome()
+        {
+            List<double> genome = new List<double>();
+            foreach (Neuron neuron in Neurons)
+                genome.AddRange(neuron.GetGenome());
+            return genome;
+        }
+
+        public void SetGenome(List<double> genome)
+        {
+            int sum = 0;
+            foreach (Neuron neuron in Neurons)
+            {
+                int num = neuron.Sinapses.Count;
+                neuron.SetGenome(genome.GetRange(sum,num));
+                sum += num;
+            }
+        }
+
+        public void Handle()
+        {
+            foreach (Neuron neuron in Neurons)
+                neuron.Activation();
+        }
     }
 }
