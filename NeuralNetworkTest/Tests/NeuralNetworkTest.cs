@@ -11,6 +11,9 @@ namespace NeuralNetworkTest.Tests
         public void NeuralNetworkCreateTest()
         {
             NeuralNetwork nn = new NeuralNetwork();
+
+
         }
+      
     }
 }

@@ -8,7 +8,7 @@ namespace NeuralNetworkTest.Tests
     public class SinapsTest
     {
         [TestMethod]
-        public void SinapsGetDataTest1()
+        public void Sinaps_GetData_ExpectedCorrect()
         {
             // arrange 
             Neuron neuron = new Neuron()
@@ -26,7 +26,7 @@ namespace NeuralNetworkTest.Tests
         }
 
         [TestMethod]
-        public void SinapsGetDataTest2()
+        public void Sinaps_GetData2_ExpectedCorrect()
         {
             // arrange 
             Neuron neuron = new Neuron()

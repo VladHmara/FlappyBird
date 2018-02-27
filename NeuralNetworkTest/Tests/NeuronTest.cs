@@ -8,7 +8,7 @@ namespace NeuralNetworkTest.Tests
     public class NeuronTest
     {
         [TestMethod]
-        public void NeuronActivationTest1()
+        public void Neuron_Activation_CorrectLogic()
         {
             // arrange 
             Neuron neuron = new Neuron();
@@ -29,11 +29,11 @@ namespace NeuralNetworkTest.Tests
             Assert.AreEqual(expected, actual);
         }
         [TestMethod]
-        public void NeuronActivationTest2()
+        public void Neuron_ActivationWithWrongWeight_CorrectRange()
         {
             // arrange 
             Neuron neuron = new Neuron();
-            Sinaps sinaps1 = new Sinaps(new Neuron() { Data = 0.5 }, 0.2);
+            Sinaps sinaps1 = new Sinaps(new Neuron() { Data = 0.5 }, 1000);
             Sinaps sinaps2 = new Sinaps(new Neuron() { Data = 0.3 }, 0.4);
             neuron.Sinapses.Add(sinaps1);
             neuron.Sinapses.Add(sinaps2);
@@ -45,5 +45,24 @@ namespace NeuralNetworkTest.Tests
             double actual = neuron.Data;
             Assert.IsTrue(actual >=- 1 && actual <= 1);
         }
+
+        [TestMethod]
+        public void Neuron_Activation_CorrectRange()
+        {
+            // arrange 
+            Neuron neuron = new Neuron();
+            Sinaps sinaps1 = new Sinaps(new Neuron() { Data = 0.5 }, 0.5);
+            Sinaps sinaps2 = new Sinaps(new Neuron() { Data = 0.3 }, 0.4);
+            neuron.Sinapses.Add(sinaps1);
+            neuron.Sinapses.Add(sinaps2);
+
+            // act
+            neuron.Activation();
+
+            // assert  
+            double actual = neuron.Data;
+            Assert.IsTrue(actual >= -1 && actual <= 1);
+        }
+
     }
 }
