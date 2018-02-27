@@ -48,11 +48,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tests\SinapsTest.cs" />
+    <Compile Include="Tests\LayerTest.cs" />
+    <Compile Include="Tests\NeuralNetworkTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\NeuronTest.cs" />
+    <Compile Include="Tests\SinapsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NeuralNetworkClasses\NeuralNetworkClasses.csproj">
+      <Project>{f34127b4-e8e1-4ed6-be8b-8a6f62aea9cf}</Project>
+      <Name>NeuralNetworkClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

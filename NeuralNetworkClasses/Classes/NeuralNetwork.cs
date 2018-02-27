@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlappyBird.Neural_Network
+namespace NeuralNetworkClasses.Classes
 {
-    class NeuralNetwork
+    public class NeuralNetwork
     {
         public List<Layer> Layers { get; set; }
 
