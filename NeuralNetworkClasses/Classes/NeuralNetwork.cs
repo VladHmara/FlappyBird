@@ -58,15 +58,10 @@ namespace NeuralNetworkClasses.Classes
 
         public List<double> Handle(List<double> input)
         {
-            if (input.Count == Layers[0].Neurons.Count)
-            {
                 Layers[0].SetData(input);
                 foreach (Layer layer in Layers)
                     layer.Handle();
                 return Layers[Layers.Count - 1].GetData();
-            }
-            else
-                return null;
         }
     }
 }
