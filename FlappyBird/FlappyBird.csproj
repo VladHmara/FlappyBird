@@ -83,7 +83,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\NeuralNetworkClasses\NeuralNetworkClasses.csproj">
+      <Project>{f34127b4-e8e1-4ed6-be8b-8a6f62aea9cf}</Project>
+      <Name>NeuralNetworkClasses</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Textures\img_bird.png" />
     <Content Include="Textures\img_ground.png" />

@@ -11,15 +11,18 @@ using System.Windows.Interop;
 using System.IO;
 using Microsoft.Win32;
 using System.Diagnostics;
+using NeuralNetworkClasses.Classes;
 
 namespace FlappyBird
 {
-    class Bird
+    class Bird :IGenetic
     {
         static public List<Bird> items = new List<Bird>();
 
         public double TopPosition { get; set; }
         public int Counter { get; set; }
+        public NeuralNetwork NeuralNetworkItem { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public long Fintess { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         static Bitmap[] birdImgs = new Bitmap[20];
 
