@@ -47,6 +47,7 @@ namespace NeuralNetworkClasses.Classes
             double sum = 0;
             foreach (Sinaps sinaps in Sinapses)
                 sum += sinaps.GetData();
+            //Data = 1 / (1 + Math.Exp(-sum));
             Data = (Math.Exp(2 * sum) - 1) / (Math.Exp(2 * sum) + 1);
         }
     }

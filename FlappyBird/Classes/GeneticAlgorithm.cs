@@ -12,24 +12,28 @@ namespace FlappyBird
         {
             Selection(ref items);
 
-            for (int i = items.Count / 3 + 1; i < items.Count; i++)
-            {
-                //luckyWay - way how birds will be Crossing
-                int luckyWay = r.Next(1, 7);
+            //for (int i = items.Count / 3 + 1; i < items.Count; i++)
+            //{
+            //    luckyWay - way how birds will be Crossing
+            //    int luckyWay = r.Next(1, 7);
 
-                switch (luckyWay)
-                {
-                    case 1: { items[i].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[1].NeuralNetworkItem); break; }
-                    case 2: { items[i].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[2].NeuralNetworkItem); break; }
-                    case 3: { items[i].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[3].NeuralNetworkItem); break; }
-                    case 4: { items[i].NeuralNetworkItem = Crossing(items[1].NeuralNetworkItem, items[2].NeuralNetworkItem); break; }
-                    case 5: { items[i].NeuralNetworkItem = Crossing(items[1].NeuralNetworkItem, items[3].NeuralNetworkItem); break; }
-                    case 6: { items[i].NeuralNetworkItem = Crossing(items[2].NeuralNetworkItem, items[3].NeuralNetworkItem); break; }
+            //    switch (luckyWay)
+            //    {
+            //        case 1: { items[i].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[1].NeuralNetworkItem); break; }
+            //        case 2: { items[i].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[2].NeuralNetworkItem); break; }
+            //        case 3: { items[i].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[3].NeuralNetworkItem); break; }
+            //        case 4: { items[i].NeuralNetworkItem = Crossing(items[1].NeuralNetworkItem, items[2].NeuralNetworkItem); break; }
+            //        case 5: { items[i].NeuralNetworkItem = Crossing(items[1].NeuralNetworkItem, items[3].NeuralNetworkItem); break; }
+            //        case 6: { items[i].NeuralNetworkItem = Crossing(items[2].NeuralNetworkItem, items[3].NeuralNetworkItem); break; }
 
-                }
-
-            }
-
+            //    }
+            //}
+            items[4].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[1].NeuralNetworkItem);
+            items[5].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[2].NeuralNetworkItem);
+            items[6].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[3].NeuralNetworkItem);
+            items[7].NeuralNetworkItem = Crossing(items[1].NeuralNetworkItem, items[2].NeuralNetworkItem);
+            items[8].NeuralNetworkItem = Crossing(items[1].NeuralNetworkItem, items[3].NeuralNetworkItem);
+            items[9].NeuralNetworkItem = Crossing(items[2].NeuralNetworkItem, items[3].NeuralNetworkItem);
             Mutation(ref items);
 
 
@@ -58,7 +62,7 @@ namespace FlappyBird
                         break;
                     if (Math.Abs(parent2Genome[currentIndex] - parent1Genome[j] - 0.001) <= 0.02)
                     {
-                        currentIndex++;
+                      currentIndex++;
                         j = -1;
                     }
                 }
@@ -66,10 +70,11 @@ namespace FlappyBird
                     break;
                 parent1Genome[i] = parent2Genome[currentIndex++];
             }
+            // 2 выходных, 6 внутренних, 1 выходных
+            NeuralNetwork NetworkNew = new NeuralNetwork(2,6,1);
+            NetworkNew.SetGenome(parent1Genome);
 
-            parent1.SetGenome(parent1Genome);
-
-            return parent1;
+            return NetworkNew;
         }
 
         private static void Mutation(ref List<Bird> items)
@@ -78,23 +83,22 @@ namespace FlappyBird
             //Коефициент мутирующих особей
             double kMutation = 0.1;
             //Коефициент приращивания
-            double kAdd = r.NextDouble() * 0.1;
+            double kAdd = r.NextDouble();
 
             //Всего  мутированных особей
-            for (int i = 0; i < items.Count * kMutation; i++)
+            for (int j = 4; j < items.Count; j++)
             {
-                int current = r.Next(0, items.Count);
+                List<double> genome = items[j].NeuralNetworkItem.GetGenome();
+                for (int i = 0; i < genome.Count * kMutation; i++)
+                {
+                    int curerntGenome = r.Next(0, genome.Count);
 
-                List<double> genome = items[current].NeuralNetworkItem.GetGenome();
-                int curerntGenome = r.Next(0, genome.Count);
-
-                if (r.Next(0, 2) == 0)
-                    genome[curerntGenome] += genome[curerntGenome] + kAdd <= 1 ? kAdd : -1 * kAdd;
-                else
-                    genome[curerntGenome] -= genome[curerntGenome] - kAdd >= -1 ? kAdd : -1 * kAdd;
-
-                items[current].NeuralNetworkItem.SetGenome(genome);
-
+                    if (r.Next(0, 2) == 0)
+                        genome[curerntGenome] += genome[curerntGenome] + kAdd <= 1 ? kAdd : -1 * kAdd;
+                    else
+                        genome[curerntGenome] -= genome[curerntGenome] - kAdd >= 0 ? kAdd : -1 * kAdd;
+                }
+                items[j].NeuralNetworkItem.SetGenome(genome);
             }
 
         }

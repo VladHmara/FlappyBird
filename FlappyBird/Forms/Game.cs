@@ -15,6 +15,7 @@ namespace FlappyBird
     public partial class Game : Form
     {
         public static Game mainForm;
+        private static int CounterGeneretation = 0;
         public Game()
         {
             InitializeComponent();
@@ -23,7 +24,6 @@ namespace FlappyBird
             {
                 new Bird(Bird.Color.White);
             }
-
             for (int i = 0; i < 4; i++)
             {
                 new Tree();
@@ -50,12 +50,15 @@ namespace FlappyBird
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
+            listBox1.Items.Add("Bird's Id - Max Distance");
 
             //coolizies
             //BirdDie        
             foreach (Bird b in Bird.items)
             {
-                    listBox1.Items.Add(b.Fintess.ToString());
+                if (b.isAlive)
+                {
+                    listBox1.Items.Add(b.Id + " - " + b.Fintess.ToString());
 
                     foreach (Tree tree in Tree.items)
                     {
@@ -65,7 +68,9 @@ namespace FlappyBird
                             b.pictureBox.Top > mainForm.Height - 175)
                             b.Dead();
                     }
+                }
             }
+            listBox1.Items.Add("Generation - " + CounterGeneretation);
 
             if (Tree.targetOfBird.pbTreeTop.Left <= 128)
             {
@@ -86,7 +91,7 @@ namespace FlappyBird
                 t.Move();
             }
 
-            label1.Text = Tree.targetOfBird.pbTreeTop.Left.ToString();
+            label1.Text = Tree.targetOfBird.pbTreeTop.Left.ToString() + " ; " + (Tree.targetOfBird.pbTreeTop.Bottom + 500).ToString();
             label1.Left = Tree.targetOfBird.pbTreeTop.Left + 90;
             label1.Top = Tree.targetOfBird.pbTreeTop.Top + 500;
         }
@@ -120,6 +125,7 @@ namespace FlappyBird
             //Playing in God
             GeneticAlgorithm.Evolution(ref Bird.items);
 
+            CounterGeneretation++;
 
             StartGame();
         }

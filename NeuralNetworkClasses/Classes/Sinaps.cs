@@ -10,18 +10,12 @@ namespace NeuralNetworkClasses.Classes
     {
         public double Weight { get; set; }
         public Neuron PreviousNeuron { get; set; }
-        static Random Random { get; set; }
-
-        static Sinaps()
-        {
-            Random = new Random();
-        }
+        static private Random r = new Random();
 
         public Sinaps(Neuron previousNeuron)
         {
             PreviousNeuron = previousNeuron;
-            Random random = new Random();
-            Weight = Random.NextDouble() * 2 - 1;
+            Weight = r.NextDouble() * 2 - 1;
         }
         public Sinaps(Neuron previousNeuron, double weight)
         {
