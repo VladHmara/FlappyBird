@@ -50,7 +50,7 @@ namespace NeuralNetworkClasses.Classes
             int sum = 0;
             foreach (Layer layer in Layers)
             {
-                int num = layer.Neurons.Count;
+                int num = layer.Neurons.Count * layer.Neurons[0].Sinapses.Count;
                 layer.SetGenome(genome.GetRange(sum, num));
                 sum += num;
             }
@@ -58,10 +58,10 @@ namespace NeuralNetworkClasses.Classes
 
         public List<double> Handle(List<double> input)
         {
-                Layers[0].SetData(input);
-                foreach (Layer layer in Layers)
-                    layer.Handle();
-                return Layers[Layers.Count - 1].GetData();
+            Layers[0].SetData(input);
+            for (int i = 1; i < Layers.Count; i++)
+                Layers[i].Handle();
+            return Layers[Layers.Count - 1].GetData();
         }
     }
 }

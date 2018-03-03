@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Bird.cs" />
+    <Compile Include="Classes\GeneticAlgorithm.cs" />
     <Compile Include="Forms\Game.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -55,20 +55,19 @@ namespace FlappyBird
             //BirdDie        
             foreach (Bird b in Bird.items)
             {
-                listBox1.Items.Add(b.Fintess.ToString());
+                    listBox1.Items.Add(b.Fintess.ToString());
 
-                foreach (Tree tree in Tree.items)
-                {
-
-                    if (b.pictureBox.Bounds.IntersectsWith(tree.pbTreeBottom.Bounds) ||
-                        b.pictureBox.Bounds.IntersectsWith(tree.pbTreeTop.Bounds) ||
-                        b.pictureBox.Top < 0 ||
-                        b.pictureBox.Top > mainForm.Height - 175 )
-                        b.Dead();
-                }
+                    foreach (Tree tree in Tree.items)
+                    {
+                        if (b.pictureBox.Bounds.IntersectsWith(tree.pbTreeBottom.Bounds) ||
+                            b.pictureBox.Bounds.IntersectsWith(tree.pbTreeTop.Bounds) ||
+                            b.pictureBox.Top < 0 ||
+                            b.pictureBox.Top > mainForm.Height - 175)
+                            b.Dead();
+                    }
             }
 
-            if (Tree.targetOfBird.pbTreeTop.Left <= 110)
+            if (Tree.targetOfBird.pbTreeTop.Left <= 128)
             {
                 List<Tree> trees = Tree.items.FindAll(p => !p.Equals(Tree.targetOfBird));
                 Tree.targetOfBird = trees[0];
@@ -88,7 +87,8 @@ namespace FlappyBird
             }
 
             label1.Text = Tree.targetOfBird.pbTreeTop.Left.ToString();
-            label1.Left = Tree.targetOfBird.pbTreeTop.Left;
+            label1.Left = Tree.targetOfBird.pbTreeTop.Left + 90;
+            label1.Top = Tree.targetOfBird.pbTreeTop.Top + 500;
         }
 
         private void Game_KeyDown(object sender, KeyEventArgs e)
@@ -118,7 +118,7 @@ namespace FlappyBird
         {
             gameTimer.Stop();
             //Playing in God
-            //GeneticAlgorithm.Evolution(ref ((IEnumerable<IGenetic>)Bird.items));
+            GeneticAlgorithm.Evolution(ref Bird.items);
 
 
             StartGame();

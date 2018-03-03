@@ -23,7 +23,7 @@ namespace FlappyBird
 
         public double TopPosition { get; set; }
         public int Counter { get; set; }
-        public NeuralNetwork NeuralNetworkItem { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public NeuralNetwork NeuralNetworkItem { get; set; }
         public long Fintess { get; set; }
 
 
@@ -57,15 +57,14 @@ namespace FlappyBird
                 Location = new System.Drawing.Point(200, (int)TopPosition),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Image = birdImg[0]
-        };
+            };
             //Max distance
             Fintess = pictureBox.Location.X;
-
+            NeuralNetworkItem = new NeuralNetwork(2,6,1);
             isAlive = true;
             Game.mainForm.Controls.Add(pictureBox);
             Counter = 0;
             items.Add(this);
-            aliveBird++;
         }
 
         static Bird()
@@ -109,6 +108,11 @@ namespace FlappyBird
         {
             if (isAlive)
             {
+                List<double> data = new List<double>() { 1/(Tree.targetOfBird.pbTreeTop.Left - 128), 1/(Tree.targetOfBird.pbTreeTop.Top + 500 - TopPosition) };
+                double output = NeuralNetworkItem.Handle(data)[0];
+                if (output > 0.5)
+                    Jump();
+
                 if (Counter == 15)
                     Counter *= -1;
                 if (Counter <= 0)
@@ -136,21 +140,25 @@ namespace FlappyBird
         public void Jump()
         {
             if (isAlive)
-                Counter = 65;
+                Counter = 60;
         }
 
         public void Dead()
         {
-            pictureBox.BeginInvoke((MethodInvoker)(() => pictureBox.Visible = false));
-            isAlive = false;
-            WagStop();
-            aliveBird--;
-            if (aliveBird <= 0)
-                Game.mainForm.StopGame();
+            if (isAlive)
+            {
+                pictureBox.BeginInvoke((MethodInvoker)(() => pictureBox.Visible = false));
+                isAlive = false;
+                WagStop();
+                aliveBird--;
+                if (aliveBird <= 0)
+                    Game.mainForm.StopGame();
+            }
         }
 
         public void Born()
         {
+            aliveBird++;
             Counter = 0;
             TopPosition = 100;
             Fintess = 200;
@@ -159,12 +167,5 @@ namespace FlappyBird
             isAlive = true;
             WagStart();
         }
-        
-        //Destructor
-        ~Bird()
-        {
-            WagStop();
-        }
-
     }
 }
