@@ -13,10 +13,19 @@ namespace NeuralNetworkClasses.Classes
 
             for (int i = items.Count / 3 + 1; i < items.Count; i++)
             {
-                if (r.Next(0, 1) == 0)
-                    items[i].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[1].NeuralNetworkItem);
-                else
-                    items[i].NeuralNetworkItem = Crossing(items[2].NeuralNetworkItem, items[3].NeuralNetworkItem);
+                //luckyWay - way how birds will be Crossing
+                int luckyWay = r.Next(1, 7);
+
+                switch (luckyWay)
+                {
+                    case 1: { items[i].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[1].NeuralNetworkItem); break; }
+                    case 2: { items[i].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[2].NeuralNetworkItem); break; }
+                    case 3: { items[i].NeuralNetworkItem = Crossing(items[0].NeuralNetworkItem, items[3].NeuralNetworkItem); break; }
+                    case 4: { items[i].NeuralNetworkItem = Crossing(items[1].NeuralNetworkItem, items[2].NeuralNetworkItem); break; }
+                    case 5: { items[i].NeuralNetworkItem = Crossing(items[1].NeuralNetworkItem, items[3].NeuralNetworkItem); break; }
+                    case 6: { items[i].NeuralNetworkItem = Crossing(items[2].NeuralNetworkItem, items[3].NeuralNetworkItem); break; }
+
+                }
 
             }
 
@@ -38,7 +47,7 @@ namespace NeuralNetworkClasses.Classes
             List<double> parent2Genome = parent2.GetGenome();
             int size = parent1Genome.Count;
 
-            int randomIndex = r.Next(0, parent1Genome.Count - 1);
+            int randomIndex = r.Next(0, parent1Genome.Count);
             int currentIndex = 0;
             for (int i = randomIndex; i < size; i++)
             {
@@ -72,12 +81,12 @@ namespace NeuralNetworkClasses.Classes
             //Всего  мутированных особей
             for (int i = 0; i < items.Count * kMutation; i++)
             {
-                int current = r.Next(0, items.Count - 1);
+                int current = r.Next(0, items.Count);
 
                 List<double> genome = items[current].NeuralNetworkItem.GetGenome();
-                int curerntGenome = r.Next(0, genome.Count - 1);
+                int curerntGenome = r.Next(0, genome.Count);
 
-                if (r.Next(0, 1) == 0)
+                if (r.Next(0, 2) == 0)
                     genome[curerntGenome] += genome[curerntGenome] + kAdd <= 1 ? kAdd : -1 * kAdd;
                 else
                     genome[curerntGenome] -= genome[curerntGenome] - kAdd >= -1 ? kAdd : -1 * kAdd;

@@ -60,7 +60,10 @@ namespace FlappyBird
                 foreach (Tree tree in Tree.items)
                 {
 
-                    if (b.pictureBox.Bounds.IntersectsWith(tree.pbTreeBottom.Bounds) || b.pictureBox.Bounds.IntersectsWith(tree.pbTreeTop.Bounds))
+                    if (b.pictureBox.Bounds.IntersectsWith(tree.pbTreeBottom.Bounds) ||
+                        b.pictureBox.Bounds.IntersectsWith(tree.pbTreeTop.Bounds) ||
+                        b.pictureBox.Top < 0 ||
+                        b.pictureBox.Top > mainForm.Height - 175 )
                         b.Dead();
                 }
             }
@@ -115,7 +118,7 @@ namespace FlappyBird
         {
             gameTimer.Stop();
             //Playing in God
-            GeneticAlgorithm.Evolution(ref ((IEnumerable<IGenetic>)Bird.items));
+            //GeneticAlgorithm.Evolution(ref ((IEnumerable<IGenetic>)Bird.items));
 
 
             StartGame();
