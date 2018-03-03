@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NeuralNetworkClasses.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,7 +19,6 @@ namespace FlappyBird
         {
             InitializeComponent();
             mainForm = this;
-
             for (int i = 0; i < 10; i++)
             {
                 new Bird(Bird.Color.White);
@@ -41,17 +41,25 @@ namespace FlappyBird
         private void Game_FormClosing(object sender, FormClosingEventArgs e)
         {
             foreach (Bird bird in Bird.items)
+            {
                 bird.WagStop();
+
+            }
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
+            listBox1.Items.Clear();
+
             //coolizies
             //BirdDie        
             foreach (Bird b in Bird.items)
             {
+                listBox1.Items.Add(b.Fintess.ToString());
+
                 foreach (Tree tree in Tree.items)
                 {
+
                     if (b.pictureBox.Bounds.IntersectsWith(tree.pbTreeBottom.Bounds) || b.pictureBox.Bounds.IntersectsWith(tree.pbTreeTop.Bounds))
                         b.Dead();
                 }
@@ -106,6 +114,10 @@ namespace FlappyBird
         public void StopGame()
         {
             gameTimer.Stop();
+            //Playing in God
+            GeneticAlgorithm.Evolution(ref ((IEnumerable<IGenetic>)Bird.items));
+
+
             StartGame();
         }
     }

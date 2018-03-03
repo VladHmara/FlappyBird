@@ -15,7 +15,7 @@ using NeuralNetworkClasses.Classes;
 
 namespace FlappyBird
 {
-    class Bird :IGenetic
+    public partial class Bird : IGenetic
     {
         static public List<Bird> items = new List<Bird>();
         static int aliveBird;
@@ -24,7 +24,7 @@ namespace FlappyBird
         public double TopPosition { get; set; }
         public int Counter { get; set; }
         public NeuralNetwork NeuralNetworkItem { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public long Fintess { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public long Fintess { get; set; }
 
 
         Bitmap[] birdImg = new Bitmap[2];
@@ -57,7 +57,10 @@ namespace FlappyBird
                 Location = new System.Drawing.Point(200, (int)TopPosition),
                 SizeMode = PictureBoxSizeMode.AutoSize,
                 Image = birdImg[0]
-            };
+        };
+            //Max distance
+            Fintess = pictureBox.Location.X;
+
             isAlive = true;
             Game.mainForm.Controls.Add(pictureBox);
             Counter = 0;
@@ -67,7 +70,8 @@ namespace FlappyBird
 
         static Bird()
         {
-            birdImgs = ImgWorker.SplitImage(new Bitmap(@"Textures\img_bird.png"), 2, 10).ToArray();
+            Bitmap bmp = new Bitmap(@"Textures\img_bird.png");
+            birdImgs = ImgWorker.SplitImage(bmp, 2, 10).ToArray();
             aliveBird = 0;
         }
 
@@ -125,6 +129,7 @@ namespace FlappyBird
                 {
                     pictureBox.Top = (int)TopPosition;
                 }));
+                Fintess++;
             }
         }
 
@@ -146,7 +151,9 @@ namespace FlappyBird
 
         public void Born()
         {
+            Counter = 0;
             TopPosition = 100;
+            Fintess = 200;
             pictureBox.Location = new System.Drawing.Point(200, (int)TopPosition);
             pictureBox.BeginInvoke((MethodInvoker)(() => pictureBox.Visible = true));
             isAlive = true;

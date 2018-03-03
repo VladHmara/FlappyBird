@@ -69,7 +69,7 @@ namespace NeuralNetworkClasses.Classes
             //Коефициент приращивания
             double kAdd = r.NextDouble() * 0.1;
 
-            //Всего будет мутированных особей
+            //Всего  мутированных особей
             for (int i = 0; i < items.Count * kMutation; i++)
             {
                 int current = r.Next(0, items.Count - 1);
